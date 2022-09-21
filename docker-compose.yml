@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - DATABASE_URL=${SQLALCHEMY_DB_URL}
+    depends_on:
+      - db
+    volumes:
+      - ./:/facebook_scrapper_test
+  db:
+    image: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    env_file:
+      - .env
+
+  phpmyadmin:
+    env_file:
+      - .env
+    environment:
+      PMA_HOST: ${DB_HOSTNAME}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      UPLOAD_LIMIT: 300M
+    expose: [ '80' ]
+    image: phpmyadmin/phpmyadmin
+    links: [ 'db' ]
+    ports:
+      - 3486:80
