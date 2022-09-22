@@ -23,8 +23,10 @@ class Scrap:
                 ".//div[@class= 'pytsy3co cqf1kptm alzwoclg']/div")
             li = [e.text for e in elm]
             print(li)
-            nb_likes = int(li[3].split()[0].replace(',', ''))
-            nb_followers = int(li[4].split()[0].replace(',', ''))
+            # nb_likes = int(li[3].split()[0].replace(',', ''))
+            # nb_followers = int(li[4].split()[0].replace(',', ''))
+            nb_likes = Scrap.format_data(li[3].split()[0])
+            nb_followers = Scrap.format_data(li[4].split()[0])
             location = li[0]
             website = li[6]
             email = li[7]
@@ -32,3 +34,7 @@ class Scrap:
         except Exception as e:
             print(e)
         return (title_page, nb_likes, nb_followers, location, website, email, categorie)
+
+    @staticmethod
+    def format_data(val):
+        return int(val.replace(',', ''))
