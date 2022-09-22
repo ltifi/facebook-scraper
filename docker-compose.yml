@@ -1,5 +1,8 @@
 version: '3'
 
+networks:
+  local-net:
+
 services:
   app:
     build: .
@@ -16,8 +19,12 @@ services:
       - db
     volumes:
       - ./:/facebook_scrapper_test
+    networks:
+      - local-net
   db:
     image: mysql
+    restart: unless-stopped
+    tty: true
     ports:
       - "3307:3306"
     environment:
@@ -25,6 +32,8 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     env_file:
       - .env
+    networks:
+      - local-net
 
   phpmyadmin:
     env_file:
@@ -40,3 +49,5 @@ services:
     links: [ 'db' ]
     ports:
       - 3486:80
+    networks:
+      - local-net

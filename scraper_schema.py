@@ -6,6 +6,6 @@ class ScraperBase(BaseModel):
     """ Scrapper Base Schema ."""
     title: str
 
-class ScraperCreateSchema(ScraperBase):
-    """ Episode Create Schema ."""
-    pass
+class ScraperCreateSchema(BaseModel):
+    """ Scraper Create Schema ."""
+    url:str

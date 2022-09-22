@@ -1,4 +1,4 @@
-""" Episodes API's."""
+""" Scraper API's."""
 
 from typing import Optional
 from fastapi import APIRouter
@@ -13,7 +13,7 @@ session = SessionLocal()
 
 @app.get("/scrapp/page")
 async def get_scrapps(title: Optional[str] = None):
-    """ Get episodes with pagination API."""
+    """ Get scraping data with pagination API."""
     params = locals().copy()
     query = session.query(Scraper)
     for attr in [x for x in params if params[x] is not None]:
@@ -21,18 +21,18 @@ async def get_scrapps(title: Optional[str] = None):
     session.commit()
     return query.all()
 
-
-@app.get("/scrap", response_model=ScraperBase)
+# API endpoint to get info of a scraping page
+@app.get("/scrap/{scrap_id}")
 async def get_scrap(scrap_id: int):
     """ get specific scraping registrement."""
     db_srap = session.query(Scraper).get(scrap_id)
     return db_srap
 
-
-@app.post('/create_new_scrap')
-def create_character_scrap(scrap: ScraperCreateSchema):
+# API endpoint for scraping a specific url
+@app.post('/scrap')
+def create_new_scrap(url: str):
     """ Create new scrap registrement ."""
-    scrap = create_scrapper(session, scrap)
+    scrap = create_scrapper(session,"https://www.facebook.com/footballtunisien.tn/")
     return scrap
 
 # GET operation at route '/'
