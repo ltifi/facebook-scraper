@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.options import Options
 class Scrap:
     def __init__(self, url) -> None:
         self.url = url
-        # self.driver = None
 
     def get_browser(self):
         chrome_options = Options()
@@ -17,7 +16,6 @@ class Scrap:
         title_page =driver.find_element_by_xpath(".//div[@class= 'mfn553m3 th51lws0']").text
         elm =driver.find_elements_by_xpath(".//div[@class= 'pytsy3co cqf1kptm alzwoclg']/div")
         li  = [e.text for e in elm]
-        print(title_page)
         print(li)
         nb_likes=int(li[3].split()[0].replace(',',''))
         nb_followers=int(li[4].split()[0].replace(',',''))
