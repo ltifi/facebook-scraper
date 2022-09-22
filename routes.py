@@ -2,10 +2,11 @@
 
 from typing import Optional
 from fastapi import APIRouter, HTTPException
-from config.database import SessionLocal
-from scraper_crud import create_scrapper
-from scraper_model import Scraper
-from scraper_schema import ScraperBase, ScraperCreateSchema
+from .config.database import SessionLocal
+from .crud import create_scrapper
+from .models import Scraper
+from .schemas import ScraperBase, ScraperCreateSchema
+from .exceptions import ScrapInfoNotFoundException
 
 app = APIRouter()
 session = SessionLocal()
@@ -31,8 +32,7 @@ async def get_scrap(scrap_id: int):
     """ get specific scraping registrement."""
     db_srap = session.query(Scraper).get(scrap_id)
     if db_srap is None:
-        raise HTTPException(
-            status_code=404, detail="Input not found")
+        raise ScrapInfoNotFoundException
     return db_srap
 
 # API endpoint for scraping a specific url
@@ -44,8 +44,7 @@ async def create_new_scrap(url: str):
     scrap = create_scrapper(
         session, "https://www.facebook.com/footballtunisien.tn/")
     if scrap is None:
-        raise HTTPException(
-            status_code=404, detail="Input scraped not registered")
+        raise ScrapInfoNotFoundException
     return scrap
 
 # GET operation at route '/'
