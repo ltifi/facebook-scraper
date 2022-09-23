@@ -1,12 +1,13 @@
 """ Scraper API's."""
 
+from typing import List
 from typing import Optional
-from fastapi import APIRouter, HTTPException
-from .config.database import SessionLocal
-from .crud import create_scrapper
-from .models import Scraper
-from .schemas import ScraperBase, ScraperCreateSchema
-from .exceptions import ScrapInfoNotFoundException
+from fastapi import APIRouter
+from config.database import SessionLocal
+from crud import create_scraper
+from models import Scraper
+from exceptions import ScrapInfoNotFoundException
+from starlette import status
 
 app = APIRouter()
 session = SessionLocal()
@@ -14,8 +15,8 @@ session = SessionLocal()
 # API endpoint to get info of all scraping pages
 
 
-@app.get("/scrapp/page")
-async def get_scrapps(title: Optional[str] = None):
+@app.get("/scrap/page", status_code=status.HTTP_201_CREATED, response_model=List[Scraper])
+async def get_scraps(title: Optional[str] = None):
     """ Get scraping data with pagination API."""
     params = locals().copy()
     query = session.query(Scraper)
@@ -27,7 +28,7 @@ async def get_scrapps(title: Optional[str] = None):
 # API endpoint to get info of a scraping page
 
 
-@app.get("/scrap/{scrap_id}")
+@app.get("/scrap/{scrap_id}", status_code=status.HTTP_200_OK, response_model=Scraper)
 async def get_scrap(scrap_id: int):
     """ get specific scraping registrement."""
     db_srap = session.query(Scraper).get(scrap_id)
@@ -38,10 +39,10 @@ async def get_scrap(scrap_id: int):
 # API endpoint for scraping a specific url
 
 
-@app.post('/scrap')
-async def create_new_scrap(url: str):
+@app.post('/scrap', status_code=status.HTTP_201_CREATED, response_model=Scraper)
+async def create_new_scrap():
     """ Create new scrap registrement ."""
-    scrap = create_scrapper(
+    scrap = create_scraper(
         session, "https://www.facebook.com/footballtunisien.tn/")
     if scrap is None:
         raise ScrapInfoNotFoundException

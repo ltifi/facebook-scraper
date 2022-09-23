@@ -31,9 +31,10 @@ class Scrap:
             website = li[6]
             email = li[7]
             categorie = li[9].split()[0]
+            return (title_page, nb_likes, nb_followers, location, website, email, categorie)
         except Exception as e:
             print(e)
-        return (title_page, nb_likes, nb_followers, location, website, email, categorie)
+            return
 
     @staticmethod
     def format_data(val):

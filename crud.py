@@ -1,13 +1,12 @@
 """ Scraper crud file."""
 
 from sqlalchemy.orm import Session
-from scraper_schema import ScraperCreateSchema
-from scraper_model import Scraper
+from models import Scraper
 from scrap import Scrap
 
 
-def create_scrapper(session: Session, url: str):
-    """ Create a new scrapper."""
+def create_scraper(session: Session, url: str):
+    """ Create a new scraper."""
     try:
         cl = Scrap(url)
         (title_page, nb_likes, nb_followers, location,
@@ -17,6 +16,6 @@ def create_scrapper(session: Session, url: str):
         session.add(db_scraper_info)
         session.commit()
         session.refresh(db_scraper_info)
+        return db_scraper_info  
     except Exception as e:
         print(e)
-    return db_scraper_info

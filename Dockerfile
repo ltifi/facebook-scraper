@@ -1,7 +1,7 @@
 FROM python:3.8.1
 
 EXPOSE 8000
-WORKDIR /facebook_scrapper_test
+WORKDIR /facebook_scraper_test
 
 COPY requirements.txt ./
 RUN pip3 install --no-cache-dir --upgrade -r ./requirements.txt

@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./:/facebook_scrapper_test
+      - ./:/facebook_scraper_test
     networks:
       - local-net
   db:
