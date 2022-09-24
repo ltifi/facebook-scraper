@@ -1,5 +1,5 @@
 import unittest
-import scrap
+import app.scrap as scrap
 
 
 class UneClasseDeTest(unittest.TestCase):

@@ -3,9 +3,10 @@ version: '3'
 networks:
   local-net:
 
+
 services:
   app:
-    build: .
+    build: ./app
     ports:
       - "8000:8000"
     env_file:
@@ -18,7 +19,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./:/facebook_scraper_test
+      - ./app:/var/www/scraping
     networks:
       - local-net
   db:

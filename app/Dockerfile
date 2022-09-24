@@ -1,7 +1,7 @@
 FROM python:3.8.1
 
 EXPOSE 8000
-WORKDIR /facebook_scraper_test
+WORKDIR /var/www/scraping
 
 COPY requirements.txt ./
 RUN pip3 install --no-cache-dir --upgrade -r ./requirements.txt
@@ -18,8 +18,6 @@ RUN apt-get install -y google-chrome-stable
 RUN apt-get install -yqq unzip
 RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
 RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
-RUN python3 --version
-RUN pip3 --version
 RUN pip install --no-cache-dir --upgrade pip
 COPY . ./
 
