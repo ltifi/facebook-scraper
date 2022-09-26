@@ -22,9 +22,6 @@ class Scrap:
             elm = driver.find_elements_by_xpath(
                 ".//div[@class= 'pytsy3co cqf1kptm alzwoclg']/div")
             li = [e.text for e in elm]
-            print(li)
-            # nb_likes = int(li[3].split()[0].replace(',', ''))
-            # nb_followers = int(li[4].split()[0].replace(',', ''))
             nb_likes = Scrap.format_data(li[3].split()[0])
             nb_followers = Scrap.format_data(li[4].split()[0])
             location = li[0]
