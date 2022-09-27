@@ -1,7 +1,7 @@
 # facebook-scraper
 Quickstart
 
-Our mission is to create an application for scrapping an example of a specific facebook public page.
+Our mission is to create an application for scraping facebook public pages.
 
 -- Requirements --
 
