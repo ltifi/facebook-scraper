@@ -4,18 +4,16 @@ from sqlalchemy import Column, Integer, String
 from config.database import engine, Base
 
 
-class Scraper(Base):
+class Posts(Base):
     """ Create scraper model."""
-    __tablename__ = "scraper"
+    __tablename__ = "posts"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(50), unique=True, nullable=False)
+    text = Column(String(500))
+    link = Column(String(500))
     nb_likes = Column(Integer)
-    nb_followers = Column(Integer)
-    location = Column(String(80))
-    website = Column(String(60))
-    email = Column(String(50))
-    categorie = Column(String(50))
-
+    nb_comments = Column(Integer)
+    date = Column(String(50))
+    time = Column(String(50))
 
 
 Base.metadata.create_all(engine)
