@@ -16,5 +16,6 @@ def create_scraper(session: Session, url: str):
             session.add(db_scraper_info)
             session.commit()
             session.refresh(db_scraper_info)
+            return "created succesfuly"
     except Exception as e:
         print(e)
